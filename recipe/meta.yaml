@@ -21,6 +21,10 @@ requirements:
     - cmake
     - ninja
     - pkg-config
+    # HACK: need to get MSVC-compatible headers from winpthreads package, and
+    # we have to put it in the build deps so it won't interfere with older msys
+    # epoch packages pulled into the host env
+    - winpthreads  # [win]
   host:
     - hamlib
     - rtaudio <6
