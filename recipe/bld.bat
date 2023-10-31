@@ -14,7 +14,7 @@ cmake -G "Ninja" ^
     -DCMAKE_INSTALL_PREFIX:PATH="%LIBRARY_PREFIX%" ^
     -DCMAKE_PREFIX_PATH:PATH="%LIBRARY_PREFIX%" ^
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON ^
-    -DUSE_HAMLIB=OFF ^
+    -DUSE_HAMLIB=ON ^
     ..
 if errorlevel 1 exit 1
 
