@@ -7,6 +7,10 @@ package:
 source:
   url: https://github.com/pothosware/SoapyAudio/archive/soapy-audio-{{ version }}.tar.gz
   sha256: 856150d6ca472d3f53b7ac34eb4a218bdea44494012e23e0a592e454dc68d835
+  patches:
+    - 0001-SoapyAudio-hamlib-control-not-working-for-Softrock.patch
+    - 0002-In-hamlib-4.2-the-FILPATHLEN-was-replaced-by-HAMLIB_.patch
+    - 0003-Fix-catching-exception-by-copy.patch
 
 build:
   number: 1

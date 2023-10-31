@@ -1,0 +1,45 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Josh Blum <josh@joshknows.com>
+Date: Sun, 25 Jul 2021 18:09:23 -0500
+Subject: [PATCH] In hamlib 4.2 the FILPATHLEN was replaced by
+ HAMLIB_FILPATHLEN. Please fix line 47 of RigThread.cpp
+
+---
+ Changelog.txt | 6 ++++++
+ RigThread.cpp | 6 +++++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/Changelog.txt b/Changelog.txt
+index 86df433..9daa53f 100644
+--- a/Changelog.txt
++++ b/Changelog.txt
+@@ -1,3 +1,9 @@
++Release 0.1.2 (pending)
++==========================
++
++- Fix build for Hamlib 4.2 and up
++- Fix hamlib control for Softrock
++
+ Release 0.1.1 (2019-05-12)
+ ==========================
+ 
+diff --git a/RigThread.cpp b/RigThread.cpp
+index cd3c03c..14e723d 100644
+--- a/RigThread.cpp
++++ b/RigThread.cpp
+@@ -44,7 +44,11 @@ void RigThread::run() {
+         return;
+     }
+ 
+-	strncpy(rig->state.rigport.pathname, rigFile.c_str(), FILPATHLEN - 1);
++    //provide HAMLIB_FILPATHLEN when building against Hamlib < 4.2
++    #ifndef HAMLIB_FILPATHLEN
++    #define HAMLIB_FILPATHLEN FILPATHLEN
++    #endif
++	strncpy(rig->state.rigport.pathname, rigFile.c_str(), HAMLIB_FILPATHLEN - 1);
+     if (serialRate > 0)  // bypass for rate 0 used for USB controlled radios
+ 	    rig->state.rigport.parm.serial.rate = serialRate;
+ 
+-- 
+2.40.0
+

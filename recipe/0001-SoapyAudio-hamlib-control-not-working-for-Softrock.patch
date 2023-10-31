@@ -1,0 +1,95 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: RDPowerz <progpwr@yahoo.com>
+Date: Sun, 21 Mar 2021 19:27:08 -0400
+Subject: [PATCH] SoapyAudio hamlib control not working for Softrock
+
+---
+ RigThread.cpp | 25 ++++++++++++++++++-------
+ Settings.cpp  |  4 ++--
+ 2 files changed, 20 insertions(+), 9 deletions(-)
+
+diff --git a/RigThread.cpp b/RigThread.cpp
+index ac96cc2..cd3c03c 100644
+--- a/RigThread.cpp
++++ b/RigThread.cpp
+@@ -33,17 +33,28 @@ void RigThread::setup(rig_model_t rig_model, std::string rig_file, int serial_ra
+ };
+ 
+ void RigThread::run() {
+-    int retcode, status;
++    int retcode;
+ 
+     SoapySDR_log(SOAPY_SDR_DEBUG, "Rig thread starting.");    
+ 
+     rig = rig_init(rigModel);
++    if (rig == NULL) {
++        SoapySDR_log(SOAPY_SDR_ERROR, "Rig failed to init.");
++        terminated.store(true);
++        return;
++    }
++
+ 	strncpy(rig->state.rigport.pathname, rigFile.c_str(), FILPATHLEN - 1);
+-	rig->state.rigport.parm.serial.rate = serialRate;
++    if (serialRate > 0)  // bypass for rate 0 used for USB controlled radios
++	    rig->state.rigport.parm.serial.rate = serialRate;
++
+ 	retcode = rig_open(rig);
+-    
+     if (retcode != 0) {
+-        SoapySDR_log(SOAPY_SDR_ERROR, "Rig failed to init.");
++        char s[BUFSIZ];
++        snprintf(s, BUFSIZ, "Rig failed to open, rig: %d rig_rate: %d "
++            "rig_port: %s error: %s.", 
++            rigModel, serialRate, rigFile.c_str(), rigerror(retcode));
++        SoapySDR_log(SOAPY_SDR_ERROR, s);
+         terminated.store(true);
+         return;
+     }
+@@ -57,7 +68,7 @@ void RigThread::run() {
+     while (!terminated.load()) {
+         std::this_thread::sleep_for(std::chrono::milliseconds(150));
+         if (freqChanged.load()) {
+-            status = rig_get_freq(rig, RIG_VFO_CURR, &freq);
++            rig_get_freq(rig, RIG_VFO_CURR, &freq);
+             if (freq != newFreq) {
+                 freq = newFreq;
+                 rig_set_freq(rig, RIG_VFO_CURR, freq);
+@@ -66,7 +77,7 @@ void RigThread::run() {
+             
+             freqChanged.store(false);
+         } else {
+-            status = rig_get_freq(rig, RIG_VFO_CURR, &freq);
++            rig_get_freq(rig, RIG_VFO_CURR, &freq);
+         }
+         
+         SoapySDR_logf(SOAPY_SDR_DEBUG, "Rig Freq: %f", freq);
+@@ -98,4 +109,4 @@ void RigThread::terminate() {
+ bool RigThread::isTerminated() {
+     return terminated.load();
+ }
+-#endif
+\ No newline at end of file
++#endif
+diff --git a/Settings.cpp b/Settings.cpp
+index 172e5e4..10e0074 100644
+--- a/Settings.cpp
++++ b/Settings.cpp
+@@ -584,7 +584,7 @@ chanSetup SoapyAudio::chanSetupStrToEnum(std::string chanOpt) {
+ 
+ #ifdef USE_HAMLIB
+ void SoapyAudio::checkRigThread() {    
+-    if (!rigModel || !rigSerialRate || rigFile == "") {
++    if (!rigModel || (rigSerialRate < 0) || rigFile == "") {
+         return;
+     }
+     if (!rigThread) {
+@@ -600,4 +600,4 @@ void SoapyAudio::checkRigThread() {
+     }
+ }
+ 
+-#endif
+\ No newline at end of file
++#endif
+-- 
+2.40.0
+
