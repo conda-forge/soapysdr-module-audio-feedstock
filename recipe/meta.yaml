@@ -19,7 +19,7 @@ requirements:
     - pkg-config
   host:
     - hamlib
-    - rtaudio
+    - rtaudio <6
     - soapysdr
 
 test:
