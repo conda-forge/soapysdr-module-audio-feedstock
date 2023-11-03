@@ -1,11 +1,11 @@
-About soapysdr-module-audio
-===========================
+About soapysdr-module-audio-feedstock
+=====================================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/soapysdr-module-audio-feedstock/blob/main/LICENSE.txt)
 
 Home: https://github.com/pothosware/SoapyAudio/wiki
 
 Package license: MIT
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/soapysdr-module-audio-feedstock/blob/main/LICENSE.txt)
 
 Summary: SoapySDR plugin for audio devices
 

@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nicholas Corgan <n.corgan@gmail.com>
+Date: Sat, 15 Jul 2023 09:03:36 -0500
+Subject: [PATCH] Fix catching exception by copy
+
+---
+ Settings.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Settings.cpp b/Settings.cpp
+index 10e0074..ea0bd00 100644
+--- a/Settings.cpp
++++ b/Settings.cpp
+@@ -494,7 +494,7 @@ void SoapyAudio::writeSetting(const std::string &key, const std::string &value)
+             if (sOffset >= -2 && sOffset <= 2) {
+                 sampleOffset = sOffset;
+             }
+-        } catch (std::invalid_argument e) { }
++        } catch (const std::invalid_argument &) { }
+     }
+     
+     
+-- 
+2.40.0
+
