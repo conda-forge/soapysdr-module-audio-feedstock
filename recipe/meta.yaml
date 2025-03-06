@@ -13,7 +13,7 @@ source:
     - 0003-Fix-catching-exception-by-copy.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -21,10 +21,6 @@ requirements:
     - cmake
     - ninja
     - pkg-config
-    # HACK: need to get MSVC-compatible headers from winpthreads package, and
-    # we have to put it in the build deps so it won't interfere with older msys
-    # epoch packages pulled into the host env
-    - winpthreads  # [win]
   host:
     - hamlib
     - rtaudio <6
