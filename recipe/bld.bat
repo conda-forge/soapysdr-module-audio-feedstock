@@ -1,6 +1,9 @@
 setlocal EnableDelayedExpansion
 @echo on
 
+set "CFLAGS=%CFLAGS% -DWIN32_LEAN_AND_MEAN"
+set "CXXFLAGS=%CXXFLAGS% -DWIN32_LEAN_AND_MEAN"
+
 :: Make a build folder and change to it
 mkdir build
 if errorlevel 1 exit 1
