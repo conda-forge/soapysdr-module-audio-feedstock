@@ -17,6 +17,7 @@ build:
 
 requirements:
   build:
+    - {{ stdlib('c') }}
     - {{ compiler('cxx') }}
     - cmake
     - ninja
@@ -25,6 +26,7 @@ requirements:
     - hamlib
     - rtaudio <6
     - soapysdr
+    - winpthreads-devel  # [win]
 
 test:
   commands:
