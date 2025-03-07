@@ -14,6 +14,8 @@ source:
 
 build:
   number: 2
+  ignore_run_exports_from:
+    - winpthreads-devel  # [win]
 
 requirements:
   build:
@@ -26,6 +28,7 @@ requirements:
     - hamlib
     - rtaudio <6
     - soapysdr
+    # needed just for a header to compile against hamlib, but not linked against
     - winpthreads-devel  # [win]
 
 test:
