@@ -1,4 +1,4 @@
-{% set version = "0.1.1" %}
+{% set version = "0.1.2" %}
 
 package:
   name: soapysdr-module-audio
@@ -6,14 +6,14 @@ package:
 
 source:
   url: https://github.com/pothosware/SoapyAudio/archive/soapy-audio-{{ version }}.tar.gz
-  sha256: 856150d6ca472d3f53b7ac34eb4a218bdea44494012e23e0a592e454dc68d835
+  sha256: 61a90aff4131fee6748fb9c4871c5f6af9c7e67954b84a2d7f0ec4fbb08a5347
   patches:
     - 0001-SoapyAudio-hamlib-control-not-working-for-Softrock.patch
     - 0002-In-hamlib-4.2-the-FILPATHLEN-was-replaced-by-HAMLIB_.patch
     - 0003-Fix-catching-exception-by-copy.patch
 
 build:
-  number: 2
+  number: 0
   ignore_run_exports_from:
     - winpthreads-devel  # [win]
 
@@ -48,11 +48,7 @@ about:
   license_file: LICENSE.txt
   summary: 'SoapySDR plugin for audio devices'
   description: >
-    The Soapy Audio project provides a plugin module for sound card devices
-    within the SoapySDR API and for software that supports SoapySDR. In
-    addition, SoapyAudio includes optional support for hamlib, which provides
-    basic gain and frequency controls for certain tuners which may be paired
-    with an audio device.
+    The Soapy Audio project provides a plugin module for sound card devices within the SoapySDR API and for software that supports SoapySDR. In addition, SoapyAudio includes optional support for hamlib, which provides basic gain and frequency controls for certain tuners which may be paired with an audio device.
   doc_url: https://github.com/pothosware/SoapyAudio/wiki
   dev_url: https://github.com/pothosware/SoapyAudio
 
