@@ -25,6 +25,13 @@ requirements:
     - hamlib
     - rtaudio <6
     - soapysdr
+    # needed just for a header to compile against hamlib, but not linked against
+    - if: win
+      then: winpthreads-devel
+  ignore_run_exports:
+    from_package:
+      - if: win
+        then: winpthreads-devel
 
 tests:
   - package_contents:
