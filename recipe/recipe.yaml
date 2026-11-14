@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: "0.1.2"
+  version: "0.2.0"
 
 package:
   name: soapysdr-module-audio
@@ -9,7 +9,7 @@ package:
 
 source:
   url: https://github.com/pothosware/SoapyAudio/archive/soapy-audio-${{ version }}.tar.gz
-  sha256: 61a90aff4131fee6748fb9c4871c5f6af9c7e67954b84a2d7f0ec4fbb08a5347
+  sha256: 8b668bc3fa80f29eee80a706d6f339558a29a51d07ca868f0fffdec13229ce7b
 
 build:
   number: 0
